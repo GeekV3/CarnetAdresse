@@ -73,7 +73,7 @@
             <div class="navbar-nav ms-auto">
                 <a class="nav-link" href="{{ route('home') }}">Home</a>
                 <a class="nav-link" href="#">Contacts</a>
-                <a class="nav-link" href="#">Tags</a>
+                <a href="{{ route('tags.index') }}" class="nav-link">Tags</a>
                 <a class="nav-link" href="#">Groupes</a>
                 <form action="{{ route('logout') }}" method="POST" class="d-inline">
                     @csrf
@@ -87,9 +87,7 @@
         <h3 class="mb-4">Liste des Contacts</h3>
         <div class="d-flex justify-content-between mb-3">
             @livewire('create-contact')
-
-            @livewire('import-contacts') <!-- Bouton Importer -->
-
+            @livewire('search-contacts')
             @livewire('export-contacts')
         </div>
         
@@ -97,7 +95,6 @@
             @livewire('contact-list')
         </div>
     </div>
-    @livewire('import-contacts')
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

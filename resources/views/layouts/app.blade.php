@@ -13,6 +13,7 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @livewireStyles
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
@@ -28,9 +29,11 @@
             @endif
 
             <!-- Page Content -->
-            <main>
-                {{ $slot }}
+            <main class="container mt-4">
+                @yield('content')
             </main>
         </div>
+
+        @livewireScripts
     </body>
 </html>

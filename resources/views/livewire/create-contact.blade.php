@@ -54,6 +54,14 @@
                             <label>Description</label>
                             <textarea class="form-control" wire:model="description"></textarea>
                         </div>
+                        <div>
+                            <label for="tags">Tags :</label>
+                            <select multiple wire:model="selectedTags" class="border rounded p-2 w-full">
+                                @foreach($tags as $tag)
+                                    <option value="{{ $tag->id }}">{{ $tag->nom }}</option>
+                                @endforeach
+                            </select>
+                        </div>
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>

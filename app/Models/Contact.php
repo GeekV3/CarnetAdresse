@@ -12,5 +12,9 @@ class Contact extends Model
     protected $fillable = [
         'nom', 'prenom', 'entreprise', 'email', 'telephone_1', 'telephone_2', 'description'
     ];
-    
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
 }

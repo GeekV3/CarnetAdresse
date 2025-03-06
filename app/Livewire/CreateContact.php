@@ -4,11 +4,15 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Contact;
+use App\Models\Tag;
+
 
 class CreateContact extends Component
 {
     public $nom, $prenom, $entreprise, $email, $telephone_1, $telephone_2, $description;
     public $showForm = false;
+    public $selectedTags = [];
+
 
     protected $rules = [
         'nom' => 'required|string|max:255',
@@ -18,6 +22,7 @@ class CreateContact extends Component
         'telephone_2' => 'nullable|string|max:20',
         'entreprise' => 'nullable|string|max:255',
         'description' => 'nullable|string',
+        'selectedTags' => 'array',
     ];
 
     public function toggleForm()
@@ -29,7 +34,7 @@ class CreateContact extends Component
     {
         $this->validate();
 
-        Contact::create([
+        $contact = Contact::create([
             'nom' => $this->nom,
             'prenom' => $this->prenom,
             'entreprise' => $this->entreprise,
@@ -38,6 +43,9 @@ class CreateContact extends Component
             'telephone_2' => $this->telephone_2,
             'description' => $this->description,
         ]);
+        $contact->tags()->attach($this->selectedTags);
+
+        session()->flash('message', 'Contact ajouté avec succès !');
 
         // Réinitialiser le formulaire
         $this->reset();
@@ -54,6 +62,9 @@ class CreateContact extends Component
 
     public function render()
     {
-        return view('livewire.create-contact');
+        return view('livewire.create-contact', [
+            'tags' => Tag::all(), // Récupère tous les tags disponibles
+        ]);
     }
+
 }
