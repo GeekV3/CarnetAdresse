@@ -86,9 +86,11 @@
     <div class="container">
         <h3 class="mb-4">Liste des Contacts</h3>
         <div class="d-flex justify-content-between mb-3">
-         @livewire('create-contact')
+            @livewire('create-contact')
 
-            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#importModal">Importer Contacts</button>
+            @livewire('import-contacts') <!-- Bouton Importer -->
+
+            @livewire('export-contacts')
         </div>
         
         <div class="contact-list">

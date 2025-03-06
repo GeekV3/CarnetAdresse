@@ -48,7 +48,8 @@ class CreateContact extends Component
         // Fermer le formulaire
         $this->showForm = false;
 
-        return redirect()->to('/home');
+        return redirect()->route('home'); 
+
     }
 
     public function render()

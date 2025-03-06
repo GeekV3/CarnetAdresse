@@ -5,7 +5,8 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\ContactsImport; // Import de la classe ContactsImport
+use App\Imports\ContactsImport;
+use Illuminate\Support\Facades\Session;
 
 class ImportContacts extends Component
 {
@@ -13,33 +14,22 @@ class ImportContacts extends Component
 
     public $file;
 
-    // Règles de validation pour le fichier
-    protected $rules = [
-        'file' => 'required|mimes:csv,xlsx,xls|max:10240', // Limite à 10 Mo
-    ];
-
-    // Fonction pour gérer l'importation
-    public function importContacts()
+    public function import()
     {
-        $this->validate(); // Validation du fichier
+        $this->validate([
+            'file' => 'required|mimes:xlsx,csv',
+        ]);
 
-        try {
-            // Utilisation du package Excel pour importer les contacts
-            Excel::import(new ContactsImport, $this->file);
-            
-            // Message de succès
-            session()->flash('message', 'Contacts importés avec succès!');
-        } catch (\Exception $e) {
-            // Gestion des erreurs
-            session()->flash('error', 'Erreur lors de l\'importation: ' . $e->getMessage());
-        }
+        Excel::import(new ContactsImport, $this->file);
 
-        // Réinitialiser le fichier après l'importation
-        $this->file = null;
+        Session::flash('message', 'Contacts importés avec succès !');
+
+        $this->dispatch('contactsImported'); // Rafraîchir la liste des contacts
+        $this->file = null; // Réinitialiser le fichier après importation
     }
 
     public function render()
     {
-        return view('livewire.import-contacts'); // Vue pour l'importation
+        return view('livewire.import-contacts');
     }
 }
