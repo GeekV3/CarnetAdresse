@@ -10,5 +10,11 @@ class Tag extends Model
     use HasFactory;
 
     protected $fillable = ['nom', 'couleur'];
+
+    public function contacts()
+    {
+        return $this->belongsToMany(Contact::class);
+    }
+
 }
 

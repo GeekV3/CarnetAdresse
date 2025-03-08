@@ -24,22 +24,24 @@
         <table class="table table-hover shadow-sm">
             <thead class="table-dark text-center">
                 <tr>
-                    <th>Nom</th>
-                    <th>Couleur</th>
-                    <th>Actions</th>
+                    <th style="width: 40%;">Nom</th>
+                    <th style="width: 30%;">Couleur</th>
+                    <th style="width: 30%;">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($tags as $tag)
-                    <tr class="text-center">
-                        <td class="align-middle fw-bold">{{ $tag->nom }}</td>
-                        <td class="align-middle">
-                            <span class="badge" style="background-color: '{{ $tag->couleur }}; padding: 10px; border-radius: 5px;'">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <tr class="text-center align-middle">
+                        <td class="fw-bold">{{ $tag->nom }}</td>
+                        <td>
+                            <div class="d-flex justify-content-center align-items-center">
+                                <span class="badge" style="background-color: '{{ $tag->color }}; width: 20px; height: 20px; display: inline-block; border-radius: 5px;'"></span>
+                            {{ $tag->color }}                            
+                        </div>
                         </td>
-                        <td class="align-middle">
-                            <button wire:click="deleteTag({{ $tag->id }})" class="btn btn-danger btn-sm">
-                                Supprimer
-                            </button>
+                        <td>
+                            <button wire:click="editTag({{ $tag->id }})" class="btn btn-warning btn-sm me-2">Modifier</button>
+                            <button wire:click="deleteTag({{ $tag->id }})" class="btn btn-danger btn-sm">Supprimer</button>
                         </td>
                     </tr>
                 @endforeach

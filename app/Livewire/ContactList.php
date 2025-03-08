@@ -22,6 +22,15 @@ class ContactList extends Component
     public function mount()
     {
         $this->refreshList();
+        $this->contacts = Contact::with('tags')->get();
+
+        // Appliquer la logique pour vérifier la couleur
+        foreach ($this->contacts as $contact) {
+            foreach ($contact->tags as $tag) {
+                // Vérifier si la couleur est valide et la formater correctement
+                $tag->couleur = !empty($tag->couleur) && preg_match('/^#[a-f0-9]{6}$/i', $tag->couleur) ? $tag->couleur : '#ccc';
+            }
+        }
     }
 
     public function refreshList()
@@ -31,9 +40,8 @@ class ContactList extends Component
 
     public function render()
     {
-        return view('livewire.contact-list', [
-            'contacts' => $this->contacts
-        ]);
+        $contacts = Contact::with('tags')->get(); // Charger les tags avec les contacts
+        return view('livewire.contact-list', compact('contacts'));
     }
 
     

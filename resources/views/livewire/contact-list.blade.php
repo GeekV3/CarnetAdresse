@@ -11,6 +11,7 @@
                         <th>Entreprise</th>
                         <th>Email</th>
                         <th>Téléphone</th>
+                        <th>tags</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -22,6 +23,14 @@
                             <td>{{ $contact->entreprise }}</td>
                             <td>{{ $contact->email }}</td>
                             <td>{{ $contact->telephone_1 }}</td>
+                            <td>
+                                @foreach($contact->tags as $tag)
+                                <span class="badge text-white" 
+                                    style="background-color: '{{ $tag->couleur }}; padding: 5px 10px; border-radius: 8px;'">
+                                    {{ $tag->nom }}
+                                </span>
+                                @endforeach
+                            </td>
                             <td>
                                 <button wire:click="showContactDetails({{ $contact->id }})" class="btn btn-info btn-sm">Voir</button>
                                 <button wire:click="dispatch('editContact', [{{ $contact->id }}])" class="btn btn-warning">Modifier</button>

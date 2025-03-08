@@ -15,9 +15,11 @@ Route::get('/', function () {
 // Routes d'authentification (login, register) via le fichier auth.php
 require __DIR__.'/auth.php';
 
-Route::get('/tags', function () {
-    return view('tags.index'); // Une vue qui contient le composant Livewire
-})->name('tags.index');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/tags', function () {
+        return view('tags.index');
+    })->name('tags.index');
+});
 
 
 
