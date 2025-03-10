@@ -11,6 +11,28 @@ class EditContact extends Component
     
     protected $listeners = ['editContact' => 'loadContact'];
 
+    public $tags = [];
+    public $newTag = '';
+    public $colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A8']; // Quelques couleurs aléatoires
+
+    public function addTag()
+    {
+        if (!empty($this->newTag)) {
+            $this->tags[] = [
+                'name' => $this->newTag,
+                'color' => $this->colors[array_rand($this->colors)]
+            ];
+            $this->newTag = ''; // Réinitialiser l'input
+        }
+    }
+
+    public function removeTag($index)
+    {
+        unset($this->tags[$index]);
+        $this->tags = array_values($this->tags); // Réindexer le tableau
+    }
+
+
     protected function rules()
     {
         return [
@@ -35,10 +57,35 @@ class EditContact extends Component
         $this->telephone_2 = $contact->telephone_2;
         $this->entreprise = $contact->entreprise;
         $this->description = $contact->description;
+        $this->tags = $contact->tags->map(function ($tag) {
+            return [
+                'id' => $tag->id,
+                'name' => $tag->nom,
+                'color' => $tag->couleur
+            ];
+        })->toArray();
+        
 
         // Ouvrir la modale
         $this->dispatch('show-edit-modal');
     }
+    public function attachTag($tagId)
+    {
+        $contact = Contact::find($this->contactId);
+        if (!$contact->tags->contains($tagId)) {
+            $contact->tags()->attach($tagId);
+        }
+        $this->loadContact($this->contactId);
+    }
+
+    public function detachTag($tagId)
+    {
+        $contact = Contact::find($this->contactId);
+        $contact->tags()->detach($tagId);
+        $this->loadContact($this->contactId);
+    }
+
+
 
     public function update()
     {

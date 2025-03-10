@@ -25,7 +25,7 @@
                             <td>{{ $contact->telephone_1 }}</td>
                             <td>
                                 @foreach($contact->tags as $tag)
-                                <span class="badge text-white" 
+                                <span class="badge text-black" 
                                     style="background-color: '{{ $tag->couleur }}; padding: 5px 10px; border-radius: 8px;'">
                                     {{ $tag->nom }}
                                 </span>
@@ -118,5 +118,10 @@
         });
     </script>
 
+<style>
+    table td, table th {
+        color: black !important;
+    }
+</style>
 
 </div>

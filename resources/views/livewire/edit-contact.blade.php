@@ -52,6 +52,30 @@
                             <label>Description</label>
                             <textarea class="form-control" wire:model="description"></textarea>
                         </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Tags associés</label>
+                            <div>
+                                @foreach($tags as $tag)
+                                    <span class="badge text-white" 
+                                        style="background-color: '{{ $tag['color'] }}; padding: 5px 10px; border-radius: 8px;'">
+                                        {{ $tag['name'] }}
+                                        <button type="button" wire:click="detachTag({{ $tag['id'] }})" class="btn btn-sm btn-danger">×</button>
+                                    </span>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="newTag" class="form-label fw-bold">Ajouter un tag</label>
+                            <select id="newTag" wire:model="newTag" class="form-control">
+                                <option value="">Sélectionner un tag</option>
+                                @foreach(\App\Models\Tag::all() as $tag)
+                                    <option value="{{ $tag->id }}">{{ $tag->nom }}</option>
+                                @endforeach
+                            </select>
+                            <button type="button" wire:click="attachTag($newTag)" class="btn btn-primary mt-2">Ajouter</button>
+                        </div>
+
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
